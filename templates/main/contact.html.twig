@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{#{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}#}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <div class="w-50 m-auto">
+            <h1>Contact </h1>
+
+            {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.subject) }}
+            {{ form_row(form.content) }}
+            <button type="submit" class="btn btn-primary">Send</button>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ movie is empty ? 'Not found' : movie.title }}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    {% if movie is not empty %}
+        <h1>{{ movie.title }}</h1>
+
+        <img class="float-end" src="{{ movie.poster }}" alt="{{ movie.title }} cover">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Id : {{ movie.id }}</li>
+            <li class="list-group-item">IMDb : {{ movie.imdbId }}</li>
+            <li class="list-group-item">Rated : {{ movie.rated }}</li>
+            <li class="list-group-item">Plot : {{ movie.plot }}</li>
+            <li class="list-group-item">Released at : {{ movie.releasedAt|date('d M Y') }}</li>
+            <li class="list-group-item">Genre : {{ movie.genres|map(genre => genre.name)|join(', ') }}</li>
+        </ul>
+    {% else %}
+        <h1>Not found</h1>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app_book_new' == app.current_route ? 'Create new Book' : 'Edit Book' }}{% endblock %}
+
+{% block body %}
+
+    <div class="w-50 m-auto">
+        <h1>{{ 'app_book_new' == app.current_route ? 'Create new Book' : 'Edit Book' }}</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
+    </div>
+    <a href="{{ path('app_admin_book_index') }}">back to list</a>
+{% endblock %}

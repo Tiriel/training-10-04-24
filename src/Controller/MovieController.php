@@ -14,6 +14,7 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\ValueResolver;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/movie')]
@@ -42,10 +43,10 @@ class MovieController extends AbstractController
     }
 
     #[Route('/omdb/{title}', name: 'app_movie_omdb', methods: ['GET'])]
-    public function omdb(string $title, MovieProvider $provider): Response
+    public function omdb(#[ValueResolver('movie')] ?Movie $movie): Response
     {
         return $this->render('movie/show.html.twig', [
-            'movie' => $provider->getOne(SearchType::Title, $title),
+            'movie' => $movie,
         ]);
     }
 

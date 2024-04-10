@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Book\BookManager;
 use App\Entity\Book;
 use App\Entity\User;
 use App\Form\BookType;
@@ -29,10 +30,10 @@ class BookController extends AbstractController
     }
 
     #[Route('/{id<\d+>?1}', name:  'app_book_show', methods: ['GET'])]
-    public function show(int $id, BookRepository $repository): Response
+    public function show(int $id, BookManager $manager): Response
     {
         return $this->render('book/show.html.twig', [
-            'book' => $repository->find($id),
+            'book' => $manager->findOne($id),
         ]);
     }
 

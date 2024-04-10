@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Movie;
-use App\Movie\Enum\SearchType;
+use App\Movie\Search\Enum\SearchType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;

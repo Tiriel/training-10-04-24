@@ -22,18 +22,41 @@ class MovieProvider
 
     public function getOne(SearchType $type, string $value): ?Movie
     {
-        $movie = $this->manager->getRepository(Movie::class)->findLikeOmdb($type, $value);
+        $movie = $this->searchInDb($type, $value);
 
         if ($movie instanceof Movie) {
-            return $movie;
+            return $this->returnEntity($movie);
         }
 
         try {
-            $data = $this->consumer->fetch($type, $value);
+            $data = $this->searchOmdb($type, $value);
         } catch (NotFoundHttpException) {
             return null;
         }
 
+        $movie = $this->buildMovie($data);
+        $this->saveMovie($movie);
+
+        return $movie;
+    }
+
+    protected function searchInDb(SearchType $type, string $value): ?Movie
+    {
+        return $this->manager->getRepository(Movie::class)->findLikeOmdb($type, $value);
+    }
+
+    protected function returnEntity(Movie $movie): Movie
+    {
+        return $movie;
+    }
+
+    protected function searchOmdb(SearchType $type, string $value): array
+    {
+        return $this->consumer->fetch($type, $value);
+    }
+
+    protected function buildMovie(array $data): Movie
+    {
         $movie = $this->transformer->transform($data);
 
         $genres = $this->genreProvider->getFromOmdbString($data['Genre']);
@@ -41,9 +64,12 @@ class MovieProvider
             $movie->addGenre($genre);
         }
 
+        return $movie;
+    }
+
+    protected function saveMovie(Movie $movie): void
+    {
         $this->manager->persist($movie);
         $this->manager->flush();
-
-        return $movie;
     }
 }

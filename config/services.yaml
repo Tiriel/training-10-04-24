@@ -6,6 +6,7 @@
 parameters:
     items_per_page: 20
     env(DATABASE_URL): foo://bar@baz:0.0.0.0:5432/app
+    sf_version: '%env(key:require:key:symfony:key:extra:json:file:resolve:COMPOSER_PATH)%'
 
 services:
     # default configuration for services in *this* file

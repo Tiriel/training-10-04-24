@@ -44,12 +44,17 @@ class MovieController extends AbstractController
     }
 
     #[Route('/omdb/{title}', name: 'app_movie_omdb', methods: ['GET'])]
-    public function omdb(string $title, OmdbApiConsumer $consumer): Response
+    public function omdb(string $title, OmdbApiConsumer $consumer, $movieTransformer, $genreTransformer): Response
     {
-        dump($consumer->fetch(SearchType::Title, $title));
+        $data = $consumer->fetch(SearchType::Title, $title);
+        $movie = $movieTransformer->transform($data);
+
+        foreach (explode(', ', $data['Genre']) as $name) {
+            $movie->addGenre($genreTransformer->transform($name));
+        }
 
         return $this->render('movie/show.html.twig', [
-            'movie' => [],
+            'movie' => $movie,
         ]);
     }
 

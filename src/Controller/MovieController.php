@@ -46,8 +46,8 @@ class MovieController extends AbstractController
     #[Route('/omdb/{title}', name: 'app_movie_omdb', methods: ['GET'])]
     public function omdb(string $title, OmdbApiConsumer $consumer): Response
     {
-        dd($consumer->fetch(SearchType::Title, $title));
-        
+        dump($consumer->fetch(SearchType::Title, $title));
+
         return $this->render('movie/show.html.twig', [
             'movie' => [],
         ]);

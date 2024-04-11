@@ -26,8 +26,10 @@ security:
             - ROLE_PROVIDER
 
     access_decision_manager:
+        strategy: affirmative # priority, unanimous, consensus
         allow_if_all_abstain: false
-        
+        allow_if_equal_granted_denied: false
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

@@ -113,9 +113,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return \array_unique($roles);
     }
 
-    public function setRoles(array $roles): void
+    public function setRoles(array $roles): static
     {
         $this->roles = $roles;
+
+         return $this;
     }
 
     public function eraseCredentials()
